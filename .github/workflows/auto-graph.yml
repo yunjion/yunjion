@@ -1,0 +1,29 @@
+name: auto graph
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: make commits
+        run: |
+          git config --global user.name "yunjion"
+          git config --global user.email "yunjimong@gmail.com"
+
+          COUNT=$(( (RANDOM % 3) + 1 ))
+
+          for i in $(seq 1 $COUNT)
+          do
+            echo "$(date)" >> log.txt
+            git add .
+            git commit -m "update graph"
+          done
+
+          git push
