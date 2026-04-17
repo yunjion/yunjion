@@ -1,14 +1,23 @@
 name: Generate Pacman
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 */12 * * *"
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: abozanona/pacman-contribution-graph@main
+      - uses: actions/checkout@v3
+
+      - name: Generate Pacman
+        uses: abozanona/pacman-contribution-graph@main
         with:
           github_user_name: yunjion
+
+      - name: Commit files
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Generate Pacman graph"
