@@ -1,0 +1,37 @@
+name: Moving Pacman
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  move:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: make moving commits
+        run: |
+          git config --global user.name "yunjion"
+          git config --global user.email "너깃허브이메일"
+
+          DAY=$(date +%j)
+
+          for i in $(seq 1 5)
+          do
+            OFFSET=$((DAY + i))
+
+            DATE=$(date -d "$OFFSET days ago" +"%Y-%m-%dT12:00:00")
+
+            echo "$DATE" >> pacman.txt
+
+            GIT_AUTHOR_DATE="$DATE" \
+            GIT_COMMITTER_DATE="$DATE" \
+            git add .
+            
+            git commit -m "pacman step $i" || true
+          done
+
+          git push
