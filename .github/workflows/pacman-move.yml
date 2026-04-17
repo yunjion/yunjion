@@ -15,7 +15,7 @@ jobs:
       - name: make moving commits
         run: |
           git config --global user.name "yunjion"
-          git config --global user.email "너깃허브이메일"
+          git config --global user.email "yunjimong@gmail.com"
 
           DAY=$(date +%j)
 
