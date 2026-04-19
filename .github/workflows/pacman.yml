@@ -12,16 +12,16 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: Platane/snk/svg-only@v3
+      - uses: actions/checkout@v3
+      
+      - uses: hugomaiavieira/pacman-contribution-graph@main
         with:
-          github_user_name: yunjion
-          outputs: |
-            dist/pacman.svg?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b86e8,#3771d9&color_empty=#ebedf0&palette=github&type=pacman
-            dist/pacman-dark.svg?palette=github-dark&type=pacman
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          username: yunjion
 
       - uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
           target_branch: output
-          build_dir: dist
+          build_dir: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
